@@ -17,9 +17,9 @@ ist = timezone(timedelta(hours=5, minutes=30))
 async def health_check():
     return {"status": "alive"}
 
-@app.get("/alive")
+@app.get("/")
 async def health_check():
-    return {"status": "alive"}
+    return {"status": "running"}
     
 class PyObjectId(str):
     @classmethod
