@@ -31,7 +31,7 @@ async def shutdown_db_client():
 @app.get("/alive")
 async def health_check(db: AsyncIOMotorDatabase = Depends(get_db)):
     try:
-        await db.command('ping')
+        await app.mongodb_client.admin.command('ping')
         return {"status": "alive", "database": "connected"}
     except Exception as e:
         return {"status": "alive", "database": "disconnected", "error": str(e)}
