@@ -160,6 +160,6 @@ async def update_blog_stats(id: str, stats: BlogStatsUpdate):
 
 app.include_router(router, prefix="/api/blogs")
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
