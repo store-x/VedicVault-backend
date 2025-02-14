@@ -148,7 +148,7 @@ async def delete_blog(id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.patch("/{id}", response_model=Blog)
+@router.put("/{id}/stats", response_model=Blog)
 async def update_blog_stats(id: str, stats: BlogStatsUpdate):
     try:
         stats_data = stats.dict(exclude_unset=True)
