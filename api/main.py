@@ -13,6 +13,14 @@ db = client.blog_db
 # IST (Indian Standard Time) as UTC +5:30
 ist = timezone(timedelta(hours=5, minutes=30))
 
+@router.get("/alive")
+async def health_check():
+    return {"status": "alive"}
+
+@app.get("/alive")
+async def health_check():
+    return {"status": "alive"}
+    
 class PyObjectId(str):
     @classmethod
     def __get_validators__(cls):
