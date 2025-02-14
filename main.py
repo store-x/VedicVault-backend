@@ -33,8 +33,9 @@ class PyObjectId(str):
         return str(v)
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(type="string")
+    def __get_pydantic_json_schema__(cls, schema: dict) -> dict:
+        schema.update(type="string")
+        return schema
 
 class Blog(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
@@ -48,7 +49,7 @@ class Blog(BaseModel):
     updatedAt: datetime
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
         json_encoders = {ObjectId: str}
 
 class BlogCreate(BaseModel):
