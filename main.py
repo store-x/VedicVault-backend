@@ -7,12 +7,14 @@ from typing import Optional, List
 from fastapi.middleware.cors import CORSMiddleware  
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],  # Allows all origins
     allow_credentials=True,
-    allow_methods=["*"],  
-    allow_headers=["*"],  
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, PUT, PATCH, DELETE, etc.)
+    allow_headers=["*"],  # Allows all headers
+    expose_headers=["*"],  # Ensures clients can access response headers
 )
 router = APIRouter()
 client = AsyncIOMotorClient("mongodb+srv://queenxytra:queenxytra@cluster0.ivuxz80.mongodb.net/?retryWrites=true&w=majority")
