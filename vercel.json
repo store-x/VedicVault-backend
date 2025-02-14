@@ -1,19 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": { 
-        "maxLambdaSize": "15mb",
-        "includeFiles": "main.py"
+    "version": 2,
+    "builds": [
+      {
+        "src": "api/main.py",
+        "use": "@vercel/python"
       }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/api/main.py"
+      }
+    ],
+    "env": {
+      "APP_MODULE": "main:app"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/index.py"
-    }
-  ]
-}
+  }
