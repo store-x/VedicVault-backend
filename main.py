@@ -37,7 +37,7 @@ class PyObjectId(str):
         field_schema.update(type="string")
 
 class Blog(BaseModel):
-    _id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     title: str
     content: str
     author: str
@@ -78,7 +78,7 @@ async def get_all_blogs():
     try:
         blogs = []
         async for blog in db.blogs.find():
-            blog['_id'] = str(blog['_id'])
+            blog['id'] = str(blog['_id'])
             blogs.append(Blog(**blog))
         return blogs
     except Exception as e:
@@ -90,7 +90,7 @@ async def get_blog(id: str):
         blog = await db.blogs.find_one({"_id": ObjectId(id)})
         if not blog:
             raise HTTPException(status_code=404, detail="Blog not found")
-        blog['_id'] = str(blog['_id'])
+        blog['id'] = str(blog['_id'])
         return Blog(**blog)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -104,7 +104,7 @@ async def create_blog(blog: BlogCreate):
         blog_data['views'] = 0
         blog_data['likes'] = 0
         await db.blogs.insert_one(blog_data)
-        blog_data['_id'] = str(blog_data['_id'])
+        blog_data['id'] = str(blog_data['_id'])
         return Blog(**blog_data)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -123,7 +123,7 @@ async def update_blog(id: str, blog_update: BlogUpdate):
         if result.modified_count == 0:
             raise HTTPException(status_code=404, detail="Blog not found")
         updated_blog = await db.blogs.find_one({"_id": ObjectId(id)})
-        updated_blog['_id'] = str(updated_blog['_id'])
+        updated_blog['id'] = str(updated_blog['_id'])
         return Blog(**updated_blog)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -161,7 +161,7 @@ async def update_blog_stats(id: str, stats: BlogStatsUpdate):
         if result.matched_count == 0:
             raise HTTPException(status_code=404, detail="Blog not found")
         updated_blog = await db.blogs.find_one({"_id": ObjectId(id)})
-        updated_blog['_id'] = str(updated_blog['_id'])
+        updated_blog['id'] = str(updated_blog['_id'])
         return Blog(**updated_blog)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
