@@ -19,6 +19,7 @@ ist = timezone(timedelta(hours=5, minutes=30))
 
 @app.get("/alive")
 async def health_check():
+    await db.command("ping")
     return {"status": "alive"}
     
 # class PyObjectId(str):
