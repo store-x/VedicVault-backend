@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, APIRouter
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime, timezone, timedelta
@@ -68,7 +68,7 @@ class BlogStatsUpdate(BaseModel):
     views: Optional[int] = None
     likes: Optional[int] = None
 
-    @validator('*', pre=True, allow_reuse=True)
+    @field_validator('views', 'likes', mode='before')
     def check_positive(cls, v):
         if v is not None and v < 0:
             raise ValueError("Value must be positive")
