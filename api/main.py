@@ -167,7 +167,14 @@ async def update_blog_stats(id: str, stats: BlogStatsUpdate):
         raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(router, prefix="/api/blogs")
-
+@app.on_event("startup")
+async def startup_db_client():
+    try:
+        await db.command("ping")
+        print("Connected to MongoDB!")
+    except Exception as e:
+        print("MongoDB connection error:", e)
+        raise
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run(app, host="0.0.0.0", port=8000)
